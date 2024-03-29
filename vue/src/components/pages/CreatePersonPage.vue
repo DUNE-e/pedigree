@@ -49,14 +49,6 @@ export default {
     ...mapActions('persons', [
       'addPerson'
     ]),
-    pickerOptions() {
-      return {
-        disabledDate(time) {
-          // Возвращаем true для дат, которые меньше сегодняшней
-          return time.getTime() < Date.now();
-        }
-      }
-    },
     createPerson () {
       this.addPerson(this.form)
         .then((person) => {
@@ -84,10 +76,6 @@ export default {
     margin-top: 10px;
     margin-right: 10px;
     margin-bottom: 20px;
-  }
-
-  &__error {
-    color: red;
   }
 }
 </style>
