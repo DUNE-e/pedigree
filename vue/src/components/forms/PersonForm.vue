@@ -38,6 +38,7 @@
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
       placeholder="Дата рождения"
+      :picker-options="birthPickerOptions()"
     />
     <ElDatePicker
       v-model="dieDate"
@@ -46,6 +47,7 @@
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
       placeholder="Дата смерти"
+      :picker-options="diePickerOptions()"
     />
     <div class="custom-form__full-width">
       <ElInput
@@ -368,6 +370,34 @@ export default {
         ...this.value,
         ...param
       })
+    },
+    parseDateString (dateString) {
+      if (!dateString) return null
+      const parts = dateString.split(".")
+      const day = parseInt(parts[0], 10)
+      const month = parseInt(parts[1], 10) - 1
+      const year = parseInt(parts[2], 10)
+      return new Date(year, month, day)
+    },
+    birthPickerOptions () {
+      return {
+        disabledDate: time => {
+          if (this.dieDate) {
+            const dieDate = this.parseDateString(this.dieDate)
+            return dieDate && time.getTime() > dieDate.getTime()
+          }
+        }
+      }
+    },
+    diePickerOptions () {
+      return {
+        disabledDate: time => {
+          if (this.birthDate) {
+            const birthDate = this.parseDateString(this.birthDate)
+            return birthDate && time.getTime() < birthDate.getTime()
+          }
+        }
+      }
     },
     setMilitaryForm(updatedMilitary, index) {
       const newValue = { ...this.value }
