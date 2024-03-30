@@ -36,8 +36,7 @@ export default {
   },
   data () {
     return {
-      form: emptyPerson(),
-      errors: []
+      form: emptyPerson()
     }
   },
   computed: {
@@ -92,10 +91,6 @@ export default {
     margin-top: 10px;
     margin-right: 10px;
     margin-bottom: 20px;
-  }
-
-  &__error {
-    color: red;
   }
 }
 </style>

@@ -20,6 +20,7 @@
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
       placeholder="Дата свадьбы"
+      :picker-options="startPickerOptions"
     />
     <ElDatePicker
       v-model="endDate"
@@ -28,6 +29,7 @@
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
       placeholder="Дата развода"
+      :picker-options="endPickerOptions"
     />
   </div>
 </template>
@@ -73,6 +75,26 @@ export default {
       set (value) {
         this.emitFormData({ endDate: value })
       }
+    },
+    startPickerOptions () {
+      return {
+        disabledDate: time => {
+          if (this.endDate) {
+            const endDate = this.parseDateString(this.endDate)
+            return endDate && time.getTime() > endDate.getTime()
+          }
+        }
+      }
+    },
+    endPickerOptions () {
+      return {
+        disabledDate: time => {
+          if (this.startDate) {
+            const startDate = this.parseDateString(this.startDate)
+            return startDate && time.getTime() < startDate.getTime()
+          }
+        }
+      }
     }
   },
   methods: {
@@ -81,6 +103,14 @@ export default {
         ...this.value,
         ...param
       })
+    },
+    parseDateString (dateString) {
+      if (!dateString) return null
+      const parts = dateString.split(".")
+      const day = parseInt(parts[0], 10)
+      const month = parseInt(parts[1], 10) - 1
+      const year = parseInt(parts[2], 10)
+      return new Date(year, month, day)
     }
   }
 }

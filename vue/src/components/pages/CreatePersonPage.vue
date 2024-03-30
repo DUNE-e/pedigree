@@ -36,8 +36,7 @@ export default {
   },
   data () {
     return {
-      form: emptyPerson(),
-      errors: []
+      form: emptyPerson()
     }
   },
   computed: {

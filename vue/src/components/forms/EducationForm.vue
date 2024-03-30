@@ -28,6 +28,7 @@
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
       placeholder="Дата начала обучения"
+      :picker-options="startPickerOptions"
     />
     <ElDatePicker
       v-model="endDate"
@@ -36,6 +37,7 @@
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
       placeholder="Дата завершения обучения"
+      :picker-options="endPickerOptions"
     />
     <ElInput
       v-model="name"
@@ -125,6 +127,26 @@ export default {
       get() {
         return ['Бакалавриат', 'Магистратура', 'Аспирантура']
       }
+    },
+    startPickerOptions () {
+      return {
+        disabledDate: time => {
+          if (this.endDate) {
+            const endDate = this.parseDateString(this.endDate)
+            return endDate && time.getTime() > endDate.getTime()
+          }
+        }
+      }
+    },
+    endPickerOptions () {
+      return {
+        disabledDate: time => {
+          if (this.startDate) {
+            const startDate = this.parseDateString(this.startDate)
+            return startDate && time.getTime() < startDate.getTime()
+          }
+        }
+      }
     }
   },
   methods: {
@@ -136,6 +158,14 @@ export default {
     },
     selectHint(hint) {
       this.type = hint
+    },
+    parseDateString (dateString) {
+      if (!dateString) return null
+      const parts = dateString.split(".")
+      const day = parseInt(parts[0], 10)
+      const month = parseInt(parts[1], 10) - 1
+      const year = parseInt(parts[2], 10)
+      return new Date(year, month, day)
     }
   }
 }
