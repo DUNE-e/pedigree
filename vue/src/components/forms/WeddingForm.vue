@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import { parseDateString } from '@/services/datePickerOptions'
+
 export default {
   name: 'WeddingForm',
   model: {
@@ -98,19 +100,12 @@ export default {
     }
   },
   methods: {
+    parseDateString,
     emitFormData (param) {
       this.$emit('change', {
         ...this.value,
         ...param
       })
-    },
-    parseDateString (dateString) {
-      if (!dateString) return null
-      const parts = dateString.split(".")
-      const day = parseInt(parts[0], 10)
-      const month = parseInt(parts[1], 10) - 1
-      const year = parseInt(parts[2], 10)
-      return new Date(year, month, day)
     }
   }
 }
