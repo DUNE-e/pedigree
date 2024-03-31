@@ -42,18 +42,9 @@ export function formatPersonName(person: Person, config: { access?: boolean; sho
   // Добавление девичьей фамилии, если присутствует
   if (maidenName) {
     if (access && person.access) {
-      parts.push(maskFio(maidenName));
+      parts.push(maskFio(maidenName))
     } else {
-      parts.push(`(${maidenName})`);
-    }
-  }
-
-  // Добавление девичьей фамилии, если присутствует
-  if (maidenName) {
-    if (access && person.access) {
-      parts.push(maskFio(maidenName));
-    } else {
-      parts.push(`(${maidenName})`);
+      parts.push(`(${maidenName})`)
     }
   }
 

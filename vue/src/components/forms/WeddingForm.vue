@@ -35,8 +35,7 @@
 </template>
 
 <script>
-import { formatPersonName } from '@/services/formatPersonName';
-
+import { formatPersonName } from '@/services/formatPersonName'
 import { parseDateString } from '@/services/datePickerOptions'
 
 export default {
