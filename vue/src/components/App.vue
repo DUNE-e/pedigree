@@ -1,17 +1,43 @@
 <template>
-  <div>
-    <RouterView />
+  <div 
+    @mousemove="() => resetTimer()" 
+    @keypress="() => resetTimer()"
+  >
+    <RouterView v-if="isActive" />
+    <ScreenSaver v-else />
     <ModalContainer />
   </div>
 </template>
 
 <script>
-import ModalContainer from "@/components/parts/ModalContainer";
+import ModalContainer from "@/components/parts/ModalContainer"
+import ScreenSaver from "@/components/modals/ScreenSaver.vue"
 
 export default {
   components: {
     ModalContainer,
-  }
+    ScreenSaver
+  },
+  data () {
+    return {
+      isActive: true,
+      timer: null
+    }
+  },
+  mounted() {
+    this.resetTimer();
+  },
+  methods: {
+    resetTimer() {
+      this.isActive = true
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(() => {
+        this.isActive = false;
+      }, 60000)
+    },
+  },
 }
 </script>
 
@@ -103,5 +129,11 @@ h4 {
       min-height: 100px !important;
     }
   }
+}
+
+.custom-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 15px;
 }
 </style>
