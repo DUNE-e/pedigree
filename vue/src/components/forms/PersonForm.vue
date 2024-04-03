@@ -65,142 +65,154 @@
         placeholder="Биография"
       />
     </div>
+    <ElSelect
+      v-model="access"
+      class="custom-form__input"
+      placeholder="Скрывание">
+      <ElOption
+        label="Скрывать"
+        value=true
+      />
+      <ElOption
+        label="Не скрывать"
+        value=false
+      />
+    </ElSelect>
+    <ElSelect
+      v-model="removed"
+      class="custom-form__input"
+      placeholder="Удалить">
+      <ElOption
+        label="Удалён"
+        value="true"
+      />
+      <ElOption
+        label="Виден"
+        value="false"
+      />
+    </ElSelect>
+
+
     <div class="custom-form__full-width">
-      <ElSelect
-        v-model="access"
-        class="custom-form__input"
-        placeholder="Скрывание">
-        <ElOption
-          label="Скрывать"
-          value=true
+      <h2>Дети</h2>
+      <div
+        v-for="(child, index) in value.children"
+        :key="'child' + index"
+      >
+        <div class="person-page__header-wrapper">
+          <h3>Ребенок {{ index + 1 }}</h3>
+          <button class="person-page__btn-close" @click="() => removeChildForm(index)">
+            ✖
+          </button>
+        </div>
+        <ChildForm
+          :value="child"
+          :persons="childrens"
+          @change="(child) => setChildForm(child, index)"
         />
-        <ElOption
-          label="Не скрывать"
-          value=false
+      </div>
+      <div class="custom-form__full-width person-page__right-wrapper">
+        <SimpleButton type="primary" @click="() => addChildForm()">
+          Добавить
+        </SimpleButton>
+      </div>
+    </div>
+
+    <div class="custom-form__full-width">
+      <h2>Брачные союзы</h2>
+      <div
+        v-for="(wedding, index) in value.weddings"
+        :key="'wedding' + index"
+      >
+        <div class="person-page__header-wrapper">
+          <h3>Свадьба {{ index + 1 }}</h3>
+          <button class="person-page__btn-close" @click="() => removeWeddingForm(index)">
+            ✖
+          </button>
+        </div>
+        <WeddingForm
+          :value="wedding"
+          :persons="partners"
+          @change="(wedding) => setWeddingForm(wedding, index)"
         />
-      </ElSelect>
-    </div>
-    
-    <h2>Военная служба</h2>
-    <div 
-      class="custom-form__full-width" 
-      v-for="(military, index) in value.militaries" 
-      :key="'military' + index"
-    >
-      <div class ="person-page__header-wrapper">
-      <h3>Военная служба {{ index + 1 }}</h3>
-        <button class="person-page__btn-close" @click="() => removeMilitaryForm(index)">
-          ✖
-        </button>
       </div>
-      <MilitaryForm
-        :value="military"
-        class="custom-form__input"
-        @change="(military) => setMilitaryForm(military, index)"
-      />
-    </div>
-    <div class ="custom-form__full-width person-page__right-wrapper">
-      <SimpleButton type="primary" @click="() => addMilitaryForm()">
-        Добавить
-      </SimpleButton >
+      <div class="custom-form__full-width person-page__right-wrapper">
+        <SimpleButton @click="() => addWeddingForm()" type="primary">
+          Добавить
+        </SimpleButton>
+      </div>
     </div>
 
-    <h2>Брачные союзы</h2>
-    <div 
-      class="custom-form__full-width" 
-      v-for="(wedding, index) in value.weddings" 
-      :key="'wedding' + index"
-    >
-      <div class ="person-page__header-wrapper">
-      <h2>Свадьба {{ index + 1 }}</h2>
-        <button @click="() => removeWeddingForm(index)" class="person-page__btn-close ">
-          ✖
-        </button>
+    <div class="custom-form__full-width">
+      <h2>Военная служба</h2>
+      <div
+        v-for="(military, index) in value.militaries"
+        :key="'military' + index"
+      >
+        <div class="person-page__header-wrapper">
+          <h3>Военная служба {{ index + 1 }}</h3>
+          <button class="person-page__btn-close" @click="() => removeMilitaryForm(index)">
+            ✖
+          </button>
+        </div>
+        <MilitaryForm
+          :value="military"
+          @change="(military) => setMilitaryForm(military, index)"
+        />
       </div>
-      <WeddingForm
-        :value="wedding" 
-        :persons="partners"
-        class="custom-form__input"
-        @change="(wedding) => setWeddingForm(wedding, index)"
-      />
-    </div>
-    <div class ="custom-form__full-width person-page__right-wrapper">
-      <SimpleButton @click="() => addWeddingForm()" type="primary">
-        Добавить 
-      </SimpleButton >
+      <div class="custom-form__full-width person-page__right-wrapper">
+        <SimpleButton type="primary" @click="() => addMilitaryForm()">
+          Добавить
+        </SimpleButton>
+      </div>
     </div>
 
-    <h2>Образование</h2>
-    <div 
-      class="custom-form__full-width" 
-      v-for="(education, index) in value.educations" 
-      :key="'education' + index"
-    >
-      <div class ="person-page__header-wrapper">
-      <h2>Образование {{ index + 1 }}</h2>
-        <button @click="() => removeEducationForm(index)" class="person-page__btn-close ">
-          ✖
-        </button>
+    <div class="custom-form__full-width">
+      <h2>Образование</h2>
+      <div
+        v-for="(education, index) in value.educations"
+        :key="'education' + index"
+      >
+        <div class="person-page__header-wrapper">
+          <h3>Образование {{ index + 1 }}</h3>
+          <button @click="() => removeEducationForm(index)" class="person-page__btn-close">
+            ✖
+          </button>
+        </div>
+        <EducationForm
+          :value="education"
+          @change="(education) => setEducationForm(education, index)"
+        />
       </div>
-      <EducationForm
-        :value="education"
-        class="custom-form__input"
-        @change="(education) => setEducationForm(education, index)"
-      />
-    </div>
-    <div class ="custom-form__full-width person-page__right-wrapper">
-      <SimpleButton @click="() => addEducationForm()" type="primary">
-        Добавить 
-      </SimpleButton >
+      <div class="custom-form__full-width person-page__right-wrapper">
+        <SimpleButton type="primary" @click="() => addEducationForm()">
+          Добавить
+        </SimpleButton>
+      </div>
     </div>
 
-    <h2>Работа</h2>
-    <div 
-      class="custom-form__full-width" 
-      v-for="(work, index) in value.works" 
-      :key="'work' + index"
-    >
-      <div class ="person-page__header-wrapper">
-      <h2>Работа {{ index + 1 }}</h2>
-        <button @click="() => removeWorkForm(index)" class="person-page__btn-close ">
-          ✖
-        </button>
+    <div class="custom-form__full-width">
+      <h2>Работа</h2>
+      <div
+        v-for="(work, index) in value.works"
+        :key="'work' + index"
+      >
+        <div class="person-page__header-wrapper">
+          <h3>Работа {{ index + 1 }}</h3>
+          <button @click="() => removeWorkForm(index)" class="person-page__btn-close">
+            ✖
+          </button>
+        </div>
+        <WorkForm
+          :value="work"
+          @change="(work) => setWorkForm(work, index)"
+        />
       </div>
-      <WorkForm
-        :value="work"
-        class="custom-form__input"
-        @change="(work) => setWorkForm(work, index)"
-      />
-    </div>
-    <div class ="custom-form__full-width person-page__right-wrapper">
-      <SimpleButton @click="() => addWorkForm()" type="primary">
-        Добавить
-      </SimpleButton >
-    </div>
-
-    <h2>Дети</h2>
-    <div 
-      class="custom-form__full-width" 
-      v-for="(child, index) in value.children" 
-      :key="'child' + index"
-    >
-      <div class ="person-page__header-wrapper">
-      <h2>Ребёнок {{ index + 1 }}</h2>
-        <button @click="() => removeChildForm(index)" class="person-page__btn-close ">
-          ✖
-        </button>
+      <div class="custom-form__full-width person-page__right-wrapper">
+        <SimpleButton type="primary" @click="() => addWorkForm()">
+          Добавить
+        </SimpleButton>
       </div>
-      <ChildForm
-        :value="child" 
-        :persons="childrens"
-        class="custom-form__input"
-        @change="(child) => setChildForm(child, index)"
-      />
-    </div>
-    <div class ="custom-form__full-width person-page__right-wrapper">
-      <SimpleButton @click="() => addChildForm()" type="primary">
-        Добавить 
-      </SimpleButton >
     </div>
   </div>
 </template>
@@ -237,6 +249,12 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('persons', [
+      'filteredPersons',
+      'getAllPersons',
+      'getPersonById',
+      'getCenter'
+    ]),
     secondName: {
       get () {
         return this.value.secondName
@@ -262,10 +280,10 @@ export default {
       }
     },
     maidenName: {
-      get() {
+      get () {
         return this.value.maidenName;
       },
-      set(value) {
+      set (value) {
         this.emitFormData({ maidenName: value });
       }
     },
@@ -311,32 +329,24 @@ export default {
     },
     access: {
       get () {
-        if (this.value.access) {
-          return 'true'
-        }
-        else {
-          return 'false'
-        }
+        return this.value.access && this.value.access.toString()
       },
       set (value) {
-        if (value == 'true') {
-          value = true
-        }
-        else {
-          value = false
-        }
         this.emitFormData({
-          access: value
+          access: value === 'true'
         })
-      }
+      },
     },
-
-    ...mapGetters ('persons', [
-      'filteredPersons',
-      'getAllPersons',
-      'getPersonById',
-      'getCenter'
-    ]),
+    removed: {
+      get () {
+        return this.value.removed && this.value.removed.toString()
+      },
+      set (value) {
+        this.emitFormData({
+          removed: value === 'true'
+        })
+      },
+    },
     id () {
       return this.$route.params.id
     },
@@ -400,11 +410,11 @@ export default {
         ...param
       })
     },
-    formatDate(date) {
+    formatDate (date) {
       if (date) {
-        const getYear = parseInt(date.slice(6,10))
-        const getMonth = parseInt(date.slice(3,5))
-        const getDay = parseInt(date.slice(0,2))
+        const getYear = parseInt(date.slice(6, 10))
+        const getMonth = parseInt(date.slice(3, 5))
+        const getDay = parseInt(date.slice(0, 2))
         return new Date(getYear, getMonth, getDay)
       }
       return null
@@ -460,7 +470,7 @@ export default {
       newValue.children.splice(index, 1)
       this.$emit('change', newValue)
     },
-    
+
     setEducationForm (updatedEducation, index) {
       const newValue = { ...this.value }
       newValue.educations = [...newValue.educations]
@@ -499,14 +509,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-@media (max-width: 720px) {
-  .custom-form {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-  }
-} 
-
 .person-page {
   &__btn {
     justify-self: center;
@@ -529,8 +531,8 @@ export default {
   }
 
   &__header-wrapper {
-    display: grid;
-    grid-template-columns: auto max-content;
+    display: flex;
+    justify-content: space-between;
   }
 
   &__right-wrapper {

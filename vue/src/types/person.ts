@@ -24,6 +24,7 @@ export interface Person {
   works: Work[]; // Работы
   militaries: Military[]; // Военная служба
   access: boolean | null;
+  removed: boolean | null;
 }
 
 export interface Education {

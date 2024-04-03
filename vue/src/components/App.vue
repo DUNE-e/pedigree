@@ -1,6 +1,6 @@
 <template>
-  <div 
-    @mousemove="() => resetTimer()" 
+  <div
+    @mousemove="() => resetTimer()"
     @keypress="() => resetTimer()"
   >
     <RouterView v-if="isActive" />
@@ -35,7 +35,7 @@ export default {
       }
       this.timer = setTimeout(() => {
         this.isActive = false;
-      }, 60000)
+      }, 5 * 60 * 1000)
     },
   },
 }
@@ -105,6 +105,12 @@ h4 {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 15px;
   margin-bottom: 15px;
+
+  @media (max-width: 720px) {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
 
   &__full-width {
     grid-column: span 2
