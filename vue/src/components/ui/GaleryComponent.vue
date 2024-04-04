@@ -49,8 +49,8 @@ name: 'GaleryComponent',
     displayedImages () {
       return this.images
     }
-},
-methods: {
+  },
+  methods: {
     prevImage () {
       this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length
     },
@@ -61,7 +61,7 @@ methods: {
       this.currentIndex = index
     }
   }
-};
+}
 </script>
 
 
