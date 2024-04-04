@@ -20,7 +20,7 @@
                 class="gallery__navigation__thumbnails__thumbnail"
                 :class="{ 'gallery__navigation__thumbnails__thumbnail--selected': image.id === images[currentIndex].id }"
                 @click="() => setCurrentIndex(index)">
-                <img :src="image.src" :alt="image.title" class="gallery__navigation__thumbnails__thumbnail--img">
+                <img :src="image.src" class="gallery__navigation__thumbnails__thumbnail--img">
             </div>
         </div>
         <button class="gallery__navigation__button" @click="() => nextImage()">
