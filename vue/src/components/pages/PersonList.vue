@@ -64,7 +64,7 @@ export default {
     ]),
     filterRemovedData: {
       get(){
-        return this.filterRemoved.toString()
+        this.filterRemoved.toString()
       },
       set(value){
         this.filterRemoved = value == true
