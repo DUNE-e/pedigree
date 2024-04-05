@@ -5,10 +5,10 @@
         <div class="gallery__image__overlay">
           <h2 class="gallery__image__overlay__title">
             {{ images[currentIndex].title }}
-        </h2>
+          </h2>
           <p class="gallery__image__overlay__description">
             {{ images[currentIndex].description }}
-        </p>
+          </p>
         </div>
       </div>
       <div class="gallery__navigation">
@@ -33,16 +33,16 @@
 
 <script>
 export default {
-name: 'GaleryComponent',
+  name: 'GaleryComponent',
   props: {
     images: {
       type: Array,
       required: true,
     },
   },
-  data() {
+  data () {
     return {
-      currentIndex: 0,
+      currentIndex: 0
     }
   },
   computed: {
