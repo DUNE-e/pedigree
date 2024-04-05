@@ -30,7 +30,6 @@
     </div>
 </template>
 
-
 <script>
 export default {
   name: 'GaleryComponent',
@@ -64,7 +63,6 @@ export default {
 }
 </script>
 
-
 <style scoped lang="less">
 .gallery {
   position: relative;
@@ -73,7 +71,7 @@ export default {
   margin: auto;
 
   &__image {
-    position: relative; 
+    position: relative;
 
     &--active {
       width: 100%;
