@@ -46,7 +46,15 @@ export default {
   },
   computed: {
     displayedImages () {
-      return this.images
+      let result = []
+      const totalImages = this.images.length
+      const imagesToShow = totalImages < 5 ? totalImages : 5
+      const start = this.currentIndex - Math.floor(imagesToShow / 2)
+      for (let i = start; i < start + imagesToShow; i++) {
+        let adjustedIndex = (i + totalImages) % totalImages
+        result.push(this.images[adjustedIndex])
+      }
+      return result
     }
   },
   methods: {
@@ -57,7 +65,8 @@ export default {
       this.currentIndex = (this.currentIndex + 1) % this.images.length
     },
     setCurrentIndex (index) {
-      this.currentIndex = index
+      let newIndex = (this.images.findIndex(image => image.id === this.displayedImages[index].id))
+      this.currentIndex = newIndex
     }
   }
 }
